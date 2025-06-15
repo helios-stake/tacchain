@@ -31,7 +31,7 @@ func (Precompile) Address() common.Address {
 	return common.HexToAddress(pcommon.Ed25519PrecompileAddress)
 }
 
-// RequiredGas returns the static gas required to execute the precompiled contract.
+// RequiredGas returns the gas required to execute the precompiled contract.
 func (p Precompile) RequiredGas(input []byte) uint64 {
 	const sha512WordLength = 64
 
