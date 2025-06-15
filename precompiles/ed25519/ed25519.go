@@ -14,11 +14,11 @@ const (
 )
 
 var (
-	// true32Byte is returned if the ed25519 signature check succeeds.
-	true32Byte = []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+	// True32Byte is returned if the ed25519 signature check succeeds.
+	True32Byte = []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
 
-	// false32Byte is returned if the ed25519 signature check fails.
-	false32Byte = make([]byte, 32)
+	// False32Byte is returned if the ed25519 signature check fails.
+	False32Byte = make([]byte, 32)
 )
 
 var _ vm.PrecompiledContract = &Precompile{}
@@ -46,7 +46,7 @@ func (p *Precompile) Run(_ *vm.EVM, contract *vm.Contract, _ bool) (bz []byte, e
 	// Check the input length
 	if len(input) < VerifyInputLength {
 		// Input length is invalid
-		return false32Byte, nil
+		return False32Byte, nil
 	}
 
 	publicKey := input[0:32]  // 32 bytes
@@ -56,7 +56,7 @@ func (p *Precompile) Run(_ *vm.EVM, contract *vm.Contract, _ bool) (bz []byte, e
 	// Verify the Ed25519 signature against the public key and message
 	// uses https://github.com/hdevalence/ed25519consensus.Verify to comply with zip215 verification rules
 	if ed25519.Verify(publicKey, message, signature) {
-		return true32Byte, nil
+		return True32Byte, nil
 	}
-	return false32Byte, nil
+	return False32Byte, nil
 }
