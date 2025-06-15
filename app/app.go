@@ -665,7 +665,7 @@ func NewTacChainApp(
 	// NOTE: we are adding all available Cosmos EVM EVM extensions.
 	// Not all of them need to be enabled, which can be configured on a per-chain basis.
 	app.EVMKeeper.WithStaticPrecompiles(
-		evmd.NewAvailableStaticPrecompiles(
+		NewAvailableStaticPrecompiles(
 			*app.StakingKeeper,
 			app.DistrKeeper,
 			app.BankKeeper,
